@@ -39,4 +39,5 @@ const biCycleSchema = new Schema<TBiCycle>(
   }
 );
 
+// Export Model
 export const BiCycle = model<TBiCycle>("BiCycle", biCycleSchema);
