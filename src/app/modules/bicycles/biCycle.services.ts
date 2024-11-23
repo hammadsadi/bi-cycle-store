@@ -1,5 +1,5 @@
-import { BiCycle } from "./biCycle.model";
-import { TBiCycle } from "./biCycleInterface";
+import { BiCycle } from './biCycle.model';
+import { TBiCycle } from './biCycleInterface';
 
 // Bi Cycle Data Save to Database
 const biCycleDataSaveToDatabase = async (bicycle: TBiCycle) => {
@@ -7,7 +7,47 @@ const biCycleDataSaveToDatabase = async (bicycle: TBiCycle) => {
   return result;
 };
 
+// All Bi-Cycle Data get From Database
+const getAllbiCycleDataFromDatabase = async (query) => {
+  const queryData = {};
+  // if (query) {
+  //   queryData = query;
+  // }
+  console.log(query);
+  const result = await BiCycle.find(queryData);
+  return result;
+};
+
+// Single Bi-Cycle Data get From Database
+const getSinglebiCycleDataFromDatabase = async (id: string) => {
+  const result = await BiCycle.findById(id);
+  return result;
+};
+
+// Single Bi-Cycle Data Update From Database
+const singlebiCycleDataUpdateFromDatabase = async (
+  id: string,
+  cycle: TBiCycle,
+) => {
+  const result = await BiCycle.findByIdAndUpdate(
+    id,
+    { ...cycle },
+    { new: true },
+  );
+  return result;
+};
+
+// Single Bi-Cycle Data Delete From Database
+const singlebiCycleDataDeleteFromDatabase = async (id: string) => {
+  const result = await BiCycle.findByIdAndDelete(id);
+  return result;
+};
+
 // Export Bi Cycle Services
 export const biCycleServices = {
   biCycleDataSaveToDatabase,
+  getAllbiCycleDataFromDatabase,
+  getSinglebiCycleDataFromDatabase,
+  singlebiCycleDataUpdateFromDatabase,
+  singlebiCycleDataDeleteFromDatabase,
 };
