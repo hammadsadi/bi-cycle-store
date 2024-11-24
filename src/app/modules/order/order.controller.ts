@@ -5,11 +5,17 @@ import { orderServices } from './order.service';
 const createOrder = async (req: Request, res: Response) => {
   try {
     const result = await orderServices.orderSaveToDatabase(req.body);
-    if (!result) {
+    if (result === null) {
+      res.status(404).json({
+        error: 'Product Not Found',
+        message: 'Invalid Product Id! We cannot find any Product!',
+        status: false,
+      });
+    } else if (result === false) {
       res.status(400).json({
         error: 'Insufficient Stock',
         message: 'This Product Out of Stock! You can not Order This Product!',
-        success: false,
+        status: false,
       });
     } else {
       res.status(200).json({

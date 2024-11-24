@@ -6,6 +6,10 @@ import { TOrder } from './orderInterface';
 const orderSaveToDatabase = async (data: TOrder) => {
   // Reduce Quantity
   const inStockCheck = await BiCycle.findById(data.product);
+  //check Product
+  if (!inStockCheck) {
+    return inStockCheck;
+  }
   // Check Stock Status
   if (!inStockCheck?.inStock) {
     return false;
