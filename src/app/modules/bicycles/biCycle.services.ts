@@ -8,11 +8,13 @@ const biCycleDataSaveToDatabase = async (bicycle: TBiCycle) => {
 };
 
 // All Bi-Cycle Data get From Database
-const getAllbiCycleDataFromDatabase = async () => {
-  const queryData = {};
-  // if (query) {
-  //   queryData = query;
-  // }
+const getAllbiCycleDataFromDatabase = async <T>(query: T) => {
+  let queryData = {};
+  if (query) {
+    queryData = {
+      $or: [{ name: query }, { brand: query }, { type: query }],
+    };
+  }
   const result = await BiCycle.find(queryData);
   return result;
 };
