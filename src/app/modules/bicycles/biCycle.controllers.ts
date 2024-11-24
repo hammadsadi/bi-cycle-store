@@ -23,9 +23,7 @@ const createBiCycle = async (req: Request, res: Response) => {
 // Get All Bi Cycle Controller
 const allBiCycle = async (req: Request, res: Response) => {
   try {
-    const result = await biCycleServices.getAllbiCycleDataFromDatabase(
-      req.query,
-    );
+    const result = await biCycleServices.getAllbiCycleDataFromDatabase();
     res.status(200).json({
       message: 'Bicycle retrieved successfully',
       status: true,
