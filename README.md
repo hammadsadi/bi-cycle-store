@@ -18,3 +18,8 @@ Follow these steps to set up the project locally:
    git clone <repository-url>
    cd <project-folder>
    ```
+
+Install the required dependencies:
+    ```js
+    npm install
+    ```
