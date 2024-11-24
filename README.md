@@ -20,6 +20,32 @@ Follow these steps to set up the project locally:
    ```
 
 Install the required dependencies:
-    ```js
+    ```bash
     npm install
     ```
+
+
+
+2. Create a .env file in the root directory and configure the following environment variables:
+
+```bash
+ PORT=5000
+MONGODB_URL=<your-mongodb-url>
+```
+
+
+
+3. Start the server:
+
+```bash
+ npm start
+ ```
+
+
+
+4. The API will be available at 
+```bash
+http://localhost:5000
+```
+
+
