@@ -24,11 +24,15 @@ const createOrder = async (req: Request, res: Response) => {
         data: result,
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     res.status(400).json({
-      message: 'Somethng Went Wrong',
-      status: false,
-      error: error,
+      message: error?.name,
+      success: false,
+      error: {
+        name: error?.name,
+        errors: error?.errors,
+      },
+      stack: error.stack,
     });
   }
 };

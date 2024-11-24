@@ -20,11 +20,10 @@ Follow these steps to set up the project locally:
    ```
 
 2.Install the required dependencies:
+
 ```bash
 npm install
 ```
-
-
 
 3. Create a .env file in the root directory and configure the following environment variables:
 
@@ -33,87 +32,91 @@ npm install
 MONGODB_URL=<your-mongodb-url>
 ```
 
-
-
 4. Start the server:
 
 ```bash
  npm run start:dev
- ```
+```
 
+5. The API will be available at
 
-
-5. The API will be available at 
 ```bash
 http://localhost:5000
 ```
-
 
 # 📚 API Endpoints
 
 ## Product Endpoints
 
 1. Create a Bicycle
-Method: POST
+   Method: POST
 
 URL:
-```bash 
+
+```bash
 /api/products/
 ```
+
 Description: Adds a new bicycle to the database.
 
 2. Get All Bicycles
-Method: GET
-URL: 
+   Method: GET
+   URL:
+
 ```bash
 /api/products?searchTerm=<keyword>
 ```
+
 Description: Retrieves a list of bicycles. Optional search by type using the searchTerm query parameter.
 
 3. Get a Single Bicycle
-Method: GET
-URL: 
+   Method: GET
+   URL:
+
 ```bash
 /api/products/:id
 ```
+
 Description: Fetch details of a specific bicycle by ID.
 
 4. Update a Bicycle
-Method: PUT
-URL:
+   Method: PUT
+   URL:
+
 ```bash
  /api/products/:id
- ```
+```
+
 Description: Updates the details of a specific bicycle by ID.
 
 5. Delete a Bicycle
-Method: DELETE
-URL: 
+   Method: DELETE
+   URL:
+
 ```bash
 /api/products/:id
 ```
+
 Description: Deletes a bicycle by ID.
 
 ## Order Endpoints
 
 1. Place an Order
-Method: POST
-URL: 
+   Method: POST
+   URL:
+
 ```bash
 /api/orders/
 ```
+
 Description: Place an order for a bicycle.
 
 2. Get Total Revenue
-Method: GET
-URL: 
+   Method: GET
+   URL:
+
 ```bash
 /api/orders/revenue
 ```
+
 Description: Calculates and returns the total revenue from all orders.
-
-
-
-
-
-

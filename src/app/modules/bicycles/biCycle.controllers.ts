@@ -7,14 +7,17 @@ const createBiCycle = async (req: Request, res: Response) => {
     const result = await biCycleServices.biCycleDataSaveToDatabase(req.body);
     res.status(200).json({
       message: 'Bicycle Created Successful',
-      status: true,
+      success: true,
       data: result,
     });
   } catch (error: any) {
     res.status(400).json({
-      message: error._message,
-      status: false,
-      error: error,
+      message: error?.errors?.name?.name,
+      success: false,
+      error: {
+        name: error?.errors?.name?.name,
+        errors: error?.errors,
+      },
       stack: error.stack,
     });
   }
@@ -23,7 +26,6 @@ const createBiCycle = async (req: Request, res: Response) => {
 // Get All Bi Cycle Controller
 const allBiCycle = async (req: Request, res: Response) => {
   try {
-   
     const result = await biCycleServices.getAllbiCycleDataFromDatabase(
       req.query.searchTerm,
     );
@@ -41,7 +43,7 @@ const allBiCycle = async (req: Request, res: Response) => {
   }
 };
 
-// Get Single Bi Cycle 
+// Get Single Bi Cycle
 const singleBiCycle = async (req: Request, res: Response) => {
   try {
     const result = await biCycleServices.getSinglebiCycleDataFromDatabase(
