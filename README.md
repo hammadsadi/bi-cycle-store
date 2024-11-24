@@ -20,10 +20,9 @@ Follow these steps to set up the project locally:
    ```
 
 2.Install the required dependencies:
-
-    ```bash
-    npm install
-    ```
+```bash
+npm install
+```
 
 
 
@@ -39,7 +38,7 @@ MONGODB_URL=<your-mongodb-url>
 4. Start the server:
 
 ```bash
- npm start
+ npm run start:dev
  ```
 
 
@@ -52,7 +51,7 @@ http://localhost:5000
 
 # 📚 API Endpoints
 
-Product Endpoints
+## Product Endpoints
 
 1. Create a Bicycle
 Method: POST
@@ -95,7 +94,7 @@ URL:
 ```
 Description: Deletes a bicycle by ID.
 
-# Order Endpoints
+## Order Endpoints
 
 1. Place an Order
 Method: POST
