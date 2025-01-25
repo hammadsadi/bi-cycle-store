@@ -1,15 +1,24 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import { biCycleRoutes } from './app/modules/bicycles/biCycle.routes';
-import { orderRoutes } from './app/modules/order/order.routes';
+import router from './app/routes';
+import globalErrorHandler from './app/middlewares/globalErrorhandler';
+import notFound from './app/middlewares/notFound';
 const app: Application = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+// application routes
+app.use('/api/v1', router);
 
-// Application Routes
-app.use('/api/products', biCycleRoutes);
-app.use('/api/orders', orderRoutes);
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    message: 'Bicycle Server Is Running...!',
+  });
+});
+
+// Handle Global Error
+app.use(globalErrorHandler);
+app.use(notFound);
 
 export default app;

@@ -6,37 +6,28 @@ const biCycleSchema = new Schema<TBiCycle>(
   {
     name: {
       type: String,
-      required: [true, 'Please Provide a Bi-Cycle Name'],
+      required: true,
     },
     brand: {
       type: String,
-      required: [true, 'Please Provide a Brand Name'],
+      required: true,
     },
     price: {
       type: Number,
-      required: [true, 'Please add  Bicycle Price'],
-      min: [0, 'Price must be a positive number'],
+      required: true,
     },
-    type: {
+
+    model: {
       type: String,
-      enum: {
-        values: ['Mountain', 'Road', 'Hybrid', 'BMX', 'Electric'],
-        message:
-          '{VALUE} is not a valid Type. Please Select One of the following: Road, Hybrid, BMX, Electric',
-      },
-      required: [true, 'This field is Required Please Provide a Valid Type'],
+      required: true,
     },
-    description: {
+    image: {
       type: String,
-      required: [true, 'Please add A brief description of the bicycle.'],
+      required: true,
     },
-    quantity: {
-      type: Number,
-      required: [true, 'Please Provide Quantity of the bicycle available.'],
-    },
-    inStock: {
+    stock: {
       type: Boolean,
-      required: [true, 'Provide Bi Cycle Stock Status'],
+      default: true,
     },
   },
   {

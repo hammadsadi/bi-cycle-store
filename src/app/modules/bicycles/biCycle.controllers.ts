@@ -1,139 +1,75 @@
-import { Request, Response } from 'express';
 import { biCycleServices } from './biCycle.services';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
 
 // Create Bi Cycle Controllers
-const createBiCycle = async (req: Request, res: Response) => {
-  try {
-    const result = await biCycleServices.biCycleDataSaveToDatabase(req.body);
-    res.status(200).json({
-      message: 'Bicycle Created Successful',
-      success: true,
-      data: result,
-    });
-  } catch (error: any) {
-    res.status(400).json({
-      message: error?.errors?.name?.name,
-      success: false,
-      error: {
-        name: error?.errors?.name?.name,
-        errors: error?.errors,
-      },
-      stack: error.stack,
-    });
-  }
-};
+const createBiCycle = catchAsync(async (req, res) => {
+  const result = await biCycleServices.biCycleDataSaveToDatabase(
+    req.body,
+    req?.file,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle Created Successful',
+    data: result,
+  });
+});
 
 // Get All Bi Cycle Controller
-const allBiCycle = async (req: Request, res: Response) => {
-  try {
-    const result = await biCycleServices.getAllbiCycleDataFromDatabase(
-      req.query.searchTerm,
-    );
-    res.status(200).json({
-      message: 'Bicycle retrieved successfully',
-      status: true,
-      data: result,
-    });
-  } catch (error) {
-    res.status(400).json({
-      message: 'Somethng Went Wrong',
-      status: false,
-      error: error,
-    });
-  }
-};
+const allBiCycle = catchAsync(async (req, res) => {
+  const result = await biCycleServices.getAllbiCycleDataFromDatabase(
+    req.query.searchTerm,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle retrieved successfully',
+    data: result,
+  });
+});
 
 // Get Single Bi Cycle
-const singleBiCycle = async (req: Request, res: Response) => {
-  try {
-    const result = await biCycleServices.getSinglebiCycleDataFromDatabase(
-      req.params.productId,
-    );
-
-    // Check Data
-    if (!result) {
-      res.status(404).json({
-        error: 'Not Found!',
-        message: 'Bicycle Not Found with provided ID',
-        status: false,
-        data: result,
-      });
-    } else {
-      res.status(200).json({
-        message: 'Bicycle retrieved successfully',
-        status: true,
-        data: result,
-      });
-    }
-    console.log(result);
-  } catch (error) {
-    res.status(400).json({
-      message: 'Somethng Went Wrong',
-      status: false,
-      error: error,
-    });
-  }
-};
+const singleBiCycle = catchAsync(async (req, res) => {
+  const result = await biCycleServices.getSinglebiCycleDataFromDatabase(
+    req.params.productId,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle retrieved successfully',
+    data: result,
+  });
+});
 
 // Update Single Bi Cycle
-const updateSingleBiCycle = async (req: Request, res: Response) => {
-  try {
-    const result = await biCycleServices.singlebiCycleDataUpdateFromDatabase(
-      req.params.productId,
-      req.body,
-    );
-    // Check Data
-    if (!result) {
-      res.status(404).json({
-        error: 'Not Found',
-        message: 'Bicycle Not Found With Provided ID',
-        status: false,
-        data: result,
-      });
-    } else {
-      res.status(200).json({
-        message: 'Bicycle updated successfully',
-        status: true,
-        data: result,
-      });
-    }
-  } catch (error) {
-    res.status(400).json({
-      message: 'Somethng Went Wrong',
-      status: false,
-      error: error,
-    });
-  }
-};
+const updateSingleBiCycle = catchAsync(async (req, res) => {
+  const result = await biCycleServices.singlebiCycleDataUpdateFromDatabase(
+    req.params.productId,
+    req.body,
+    req.file,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle updated successfully',
+    data: result,
+  });
+});
 
 // Delete Single Bi Cycle Controller
-const deleteSingleBiCycle = async (req: Request, res: Response) => {
-  try {
-    const result = await biCycleServices.singlebiCycleDataDeleteFromDatabase(
-      req.params.productId,
-    );
-    // Check Result
-    if (!result) {
-      res.status(404).json({
-        error: 'Not Found',
-        message: 'Bicycle Not Found with Provided ID',
-        status: false,
-      });
-    } else {
-      res.status(200).json({
-        message: 'Bicycle deleted successfully',
-        status: true,
-        data: {},
-      });
-    }
-  } catch (error) {
-    res.status(400).json({
-      message: 'Somethng Went Wrong',
-      status: false,
-      error: error,
-    });
-  }
-};
+
+const deleteSingleBiCycle = catchAsync(async (req, res) => {
+  const result = await biCycleServices.singlebiCycleDataDeleteFromDatabase(
+    req.params.productId,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle deleted successfully',
+    data: result,
+  });
+});
 
 // Export Controllers
 export const biCycleControllers = {
