@@ -6,7 +6,7 @@ import { UserControllers } from './user.controllers';
 
 // Init Router
 const userRouter = express.Router();
-// Create BiCycle
+// Create User
 userRouter.post(
   '/',
   multerUpload.single('image'),
@@ -18,19 +18,6 @@ userRouter.post(
   UserControllers.createUser,
 );
 
-// Get Single BiCycle
-// Update Single BiCycle
-// router.put('/:productId', biCycleControllers.updateSingleBiCycle);
-// router.put(
-//   '/:productId',
-//   multerUpload.single('image'),
-//   (req: Request, res: Response, next: NextFunction) => {
-//     req.body = JSON.parse(req.body.data);
-//     next();
-//   },
-//   requestValidation(BicycleValidationSchemas.updateBicycleValidationSchema),
-//   biCycleControllers.updateSingleBiCycle,
-// );
 
-// Export Bi-Cycle Router
+// Export User Router
 export const UserRoutes = userRouter;

@@ -2,11 +2,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { model, Schema } from 'mongoose';
-import { TUser } from './user.interface';
+import { TUser, UserModel } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 // Create Bi Cycle Schema
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -19,6 +19,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
+      select: 0,
     },
     image: {
       type: String,
@@ -51,5 +52,23 @@ userSchema.pre('save', async function (next) {
   );
   next();
 });
+
+// set '' after saving password
+userSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
+
+userSchema.statics.isExistUserByEmail = async function (email: string) {
+  return await User.findOne({ email }).select('+password');
+};
+
+userSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword,
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
+
 // Export Model
-export const User = model<TUser>('User', userSchema);
+export const User = model<TUser, UserModel>('User', userSchema);
