@@ -4,7 +4,7 @@ import config from '../../config';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
-import { createToken } from './auth.utils';
+import jwt from 'jsonwebtoken';
 
 // Login User
 const userLogin = async (userInfo: TLoginUser) => {
@@ -19,16 +19,14 @@ const userLogin = async (userInfo: TLoginUser) => {
   //create token and sent to the  client
 
   const jwtPayload = {
-    userEmail: user.email,
-    role: user.role,
+    userEmail: user?.email,
+    role: user?.role,
   };
+  const token = jwt.sign(jwtPayload, config.jwt_access_token_secret as string, {
+    expiresIn: '10d',
+  });
 
-  const accessToken = createToken(
-    jwtPayload,
-    config.jwt_access_token_secret as string,
-    config.jwt_access_expires_in as string,
-  );
-  return accessToken;
+  return token;
 };
 
 export const AuthServices = {
