@@ -29,6 +29,16 @@ const userLogin = async (userInfo: TLoginUser) => {
   return { token };
 };
 
+// Login User
+const getLogedinUserFromDB = async (email: string) => {
+  const user = await User.findOne({email})
+  if (!user) {
+    throw new AppError(400, 'User Not Found');
+  }
+  return user
+};
+
 export const AuthServices = {
   userLogin,
+  getLogedinUserFromDB,
 };

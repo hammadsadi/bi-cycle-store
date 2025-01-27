@@ -20,6 +20,32 @@ const loginUser = catchAsync(async (req, res) => {
   });
 });
 
+// Logout User
+const logoutUser = catchAsync(async (req, res) => {
+
+  res.clearCookie('accessToken');
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Logout Successful',
+    data: '',
+  });
+});
+
+// Get Login User Info
+const getMe = catchAsync(async (req, res) => {
+const result = await AuthServices.getLogedinUserFromDB(req?.user?.userEmail)
+  res.clearCookie('accessToken');
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Logedin User Retrieved Successful',
+    data: result,
+  });
+});
+
 export const AuthControllers = {
   loginUser,
+  logoutUser,
+  getMe,
 };
