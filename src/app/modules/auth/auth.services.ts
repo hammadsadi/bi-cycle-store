@@ -26,7 +26,7 @@ const userLogin = async (userInfo: TLoginUser) => {
     expiresIn: '10d',
   });
 
-  return token;
+  return { token };
 };
 
 export const AuthServices = {
