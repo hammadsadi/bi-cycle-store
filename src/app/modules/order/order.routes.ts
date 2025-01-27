@@ -1,12 +1,30 @@
 import express from 'express';
-import { orderControllers } from './order.controller';
+
+import auth from '../../middlewares/authChecking';
+import { OrderControllers } from './order.controllers';
+import requestValidation from '../../middlewares/requestValidation';
+import { OrderValidationSchemas } from './order.validationSchemas';
 
 // Init Router
-const router = express.Router();
+const orderRouter = express.Router();
 
-// Create Order
-router.post('/', orderControllers.createOrder);
-router.get('/revenue', orderControllers.orderRevenue);
+//Get All BiCycle
+orderRouter.post(
+  '/create',
+  // requestValidation(OrderValidationSchemas.createOrderValidationSchema),
+  auth('customer'),
+  OrderControllers.createOrder,
+);
 
+//Verify Payment
+orderRouter.get('/verify', auth('customer'), OrderControllers.orderverfy);
+// Get All Orders
+orderRouter.get('/all', auth('customer'), OrderControllers.getOrders);
+// Delete Single Orders
+orderRouter.delete(
+  '/delete/:orderId',
+  auth('customer'),
+  OrderControllers.deleteOrder,
+);
 // Export Bi-Cycle Router
-export const orderRoutes = router;
+export const OrderRoutes = orderRouter;
