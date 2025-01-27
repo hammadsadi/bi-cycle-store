@@ -3,6 +3,7 @@ import { biCycleControllers } from './biCycle.controllers';
 import requestValidation from '../../middlewares/requestValidation';
 import { BicycleValidationSchemas } from './bicycle.validation.schemas';
 import { multerUpload } from '../../config/multer.config';
+import auth from '../../middlewares/authChecking';
 
 // Init Router
 const router = express.Router();
@@ -18,7 +19,7 @@ router.post(
   biCycleControllers.createBiCycle,
 );
 //Get All BiCycle
-router.get('/', biCycleControllers.allBiCycle);
+router.get('/', auth('customer'), biCycleControllers.allBiCycle);
 // Get Single BiCycle
 router.get('/:productId', biCycleControllers.singleBiCycle);
 // Update Single BiCycle
