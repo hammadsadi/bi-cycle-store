@@ -11,7 +11,7 @@ const orderRouter = express.Router();
 //Get All BiCycle
 orderRouter.post(
   '/create',
-  // requestValidation(OrderValidationSchemas.createOrderValidationSchema),
+  requestValidation(OrderValidationSchemas.createOrderValidationSchema),
   auth('customer'),
   OrderControllers.createOrder,
 );
@@ -25,6 +25,14 @@ orderRouter.delete(
   '/delete/:orderId',
   auth('customer'),
   OrderControllers.deleteOrder,
+);
+
+// Delete Single Orders
+orderRouter.patch(
+  '/update/:orderId',
+  requestValidation(OrderValidationSchemas.updateOrderValidationSchema),
+  auth('customer'),
+  OrderControllers.updateOrder,
 );
 // Export Bi-Cycle Router
 export const OrderRoutes = orderRouter;

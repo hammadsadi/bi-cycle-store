@@ -38,6 +38,22 @@ const getOrders = catchAsync(async (req, res) => {
     data: result,
   });
 });
+
+//Update Order Controllers
+const updateOrder = catchAsync(async (req, res) => {
+  const result = await OrderServices.updateOrderFromoDatabase(
+    req.body,
+    req.user,
+    req.ip,
+    req.params.orderId
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Order Updated Successful',
+    data: result,
+  });
+});
 // Create Bi Cycle Controllers
 const deleteOrder = catchAsync(async (req, res) => {
   const result = await OrderServices.deleteOrderFromDatabase(
@@ -56,4 +72,5 @@ export const OrderControllers = {
   orderverfy,
   getOrders,
   deleteOrder,
+  updateOrder,
 };

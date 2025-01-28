@@ -101,6 +101,76 @@ const getOrder = async (email: string) => {
   return orders;
 };
 
+// Bi Cycle Data Save to Database
+const updateOrderFromoDatabase = async (
+  orderInfo: Partial<IOrder>,
+  userInfo: JwtPayload,
+  client_ip: string | undefined,
+  orderId:string,
+) => {
+  const user = await User.findOne({ email: userInfo?.userEmail });
+  //Check Products
+  if (!orderInfo.products?.length) {
+    throw new AppError(400, 'Order is not specified');
+  }
+
+  // Check Order
+  const isExistOrder = await Order.findById(orderId)
+ if (!isExistOrder) {
+   throw new AppError(404, 'Order is not Found');
+ }
+ // Check Order Status
+  if (isExistOrder?.status === 'Paid') {
+    throw new AppError(400, 'You Cannot Update This Order Because This Order Already Paid');
+  }
+
+
+
+  // Calculate Price
+  const products = orderInfo.products;
+  let totalPrice = 0;
+  const orderDetails = await Promise.all(
+    products?.map(async (item) => {
+      const bicycle = await BiCycle.findById(item.product);
+      if (bicycle) {
+        const subTotal = bicycle ? (bicycle.price || 0) * item.quantity : 0;
+        totalPrice += subTotal;
+        return item;
+      }
+    }),
+  );
+  let order = await Order.findByIdAndUpdate(orderId, {
+    user: user?._id,
+    products: orderDetails,
+    totalPrice,
+  });
+
+  // Payment Payload
+  const orderPayload = {
+    amount: totalPrice,
+    order_id: order?._id,
+    currency: 'BDT',
+    customer_name: user?.name,
+    customer_address: user?.address,
+    customer_email: user?.email,
+    customer_phone: user?.phone,
+    customer_city: user?.city,
+    client_ip,
+  };
+  const payment = await OrderUtils.makePaymentAsync(orderPayload);
+  if (payment?.transactionStatus) {
+    order = await order?.updateOne({
+      transaction: {
+        id: payment.sp_order_id,
+        transaction_status: payment.transactionStatus,
+      },
+    });
+  }
+  return payment?.checkout_url;
+};
+
+
+
 // Get Orders
 const deleteOrderFromDatabase = async (id: string) => {
   const orders = await Order.findByIdAndDelete(id);
@@ -112,4 +182,5 @@ export const OrderServices = {
   verifyPayment,
   getOrder,
   deleteOrderFromDatabase,
+  updateOrderFromoDatabase,
 };
