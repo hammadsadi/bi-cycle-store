@@ -19,13 +19,8 @@ const getAllbiCycleDataFromDatabase = async (
   query: Record<string, unknown>,
 ) => {
   let searchTerm = '';
-  // if (query) {
-  //   queryData = {
-  //     $or: [{ name: query }, { brand: query }, { type: query }],
-  //   };
-  // }
+
   const queryObject = { ...query };
-  console.log(query);
   const bicycleSearchableField = ['brand', 'name', 'category'];
   if (query?.searchTerm) {
     searchTerm = query.searchTerm as string;
@@ -40,10 +35,6 @@ const getAllbiCycleDataFromDatabase = async (
   excludeField.forEach((el) => delete queryObject[el]);
   const result = await searchQuery.find(queryObject);
 
-  // const result = new QueryBuilder(BiCycle.find(), query)
-  //   .search(searchByBicycle)
-  //   .filter()
-  //   .sort();
   return result;
 };
 
