@@ -24,15 +24,21 @@ const getAllbiCycleDataFromDatabase = async (
   //     $or: [{ name: query }, { brand: query }, { type: query }],
   //   };
   // }
-
+  const queryObject = { ...query };
+  console.log(query);
+  const bicycleSearchableField = ['brand', 'name', 'category'];
   if (query?.searchTerm) {
     searchTerm = query.searchTerm as string;
   }
-  const result = await BiCycle.find({
-    $or: ['brand', 'name', 'category'].map((field) => ({
+  const searchQuery = BiCycle.find({
+    $or: bicycleSearchableField.map((field) => ({
       [field]: { $regex: searchTerm, $options: 'i' },
     })),
   });
+  // Exclude Filed For Filter
+  const excludeField = ['searchTerm'];
+  excludeField.forEach((el) => delete queryObject[el]);
+  const result = await searchQuery.find(queryObject);
 
   // const result = new QueryBuilder(BiCycle.find(), query)
   //   .search(searchByBicycle)
