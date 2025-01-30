@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// import QueryBuilder from '../../builder/QueryBuilder';
+// import { searchByBicycle } from './bicycle.constant';
 import { BiCycle } from './biCycle.model';
 import { TBiCycle } from './biCycleInterface';
 
@@ -13,14 +15,29 @@ const biCycleDataSaveToDatabase = async (bicycle: TBiCycle, file: any) => {
 };
 
 // All Bi-Cycle Data get From Database
-const getAllbiCycleDataFromDatabase = async <T>(query: T) => {
-  let queryData = {};
-  if (query) {
-    queryData = {
-      $or: [{ name: query }, { brand: query }, { type: query }],
-    };
+const getAllbiCycleDataFromDatabase = async (
+  query: Record<string, unknown>,
+) => {
+  let searchTerm = '';
+  // if (query) {
+  //   queryData = {
+  //     $or: [{ name: query }, { brand: query }, { type: query }],
+  //   };
+  // }
+
+  if (query?.searchTerm) {
+    searchTerm = query.searchTerm as string;
   }
-  const result = await BiCycle.find(queryData);
+  const result = await BiCycle.find({
+    $or: ['brand', 'name', 'category'].map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
+
+  // const result = new QueryBuilder(BiCycle.find(), query)
+  //   .search(searchByBicycle)
+  //   .filter()
+  //   .sort();
   return result;
 };
 

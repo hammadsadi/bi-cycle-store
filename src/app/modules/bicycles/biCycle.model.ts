@@ -25,6 +25,15 @@ const biCycleSchema = new Schema<TBiCycle>(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      enum: ['Mountain', 'Road', 'Hybrid', 'BMX', 'Electric'],
+      required: true,
+    },
+    productDetails: {
+      type: String,
+      required: true,
+    },
     stock: {
       type: Boolean,
       default: true,

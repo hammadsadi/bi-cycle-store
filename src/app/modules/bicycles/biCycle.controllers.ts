@@ -18,9 +18,7 @@ const createBiCycle = catchAsync(async (req, res) => {
 
 // Get All Bi Cycle Controller
 const allBiCycle = catchAsync(async (req, res) => {
-  const result = await biCycleServices.getAllbiCycleDataFromDatabase(
-    req.query.searchTerm,
-  );
+  const result = await biCycleServices.getAllbiCycleDataFromDatabase(req.query);
   sendResponse(res, {
     statusCode: 200,
     success: true,
