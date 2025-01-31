@@ -7,6 +7,7 @@ const createBicycleValidationSchema = z.object({
     brand: z.string({ required_error: 'Please Provide a Brand Name' }),
     price: z.number({ required_error: 'Please Provide Bi-Cycle Price' }).min(0),
     model: z.string({ required_error: 'Please Provide Bi-Cycle Model' }),
+    stock: z.number({ required_error: 'Please Provide Stock' }),
     productDetails: z.string({
       required_error: 'Please Provide Bi-Cycle Model',
     }),
@@ -30,6 +31,7 @@ const updateBicycleValidationSchema = z.object({
     model: z
       .string({ required_error: 'Please Provide Bi-Cycle Model' })
       .optional(),
+    stock: z.number({ required_error: 'Please Provide Stock' }).optional(),
     image: z.string().optional(),
     // stock: z.boolean({ required_error: 'Please Provide Stock Number' }),
   }),

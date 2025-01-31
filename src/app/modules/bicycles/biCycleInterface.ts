@@ -4,7 +4,7 @@ export type TBiCycle = {
   brand: string;
   price: number;
   model: string;
-  stock: boolean;
+  stock: number;
   image: string;
   category: 'Mountain' | 'Road' | 'Hybrid' | 'BMX' | 'Electric';
   productDetails: string;

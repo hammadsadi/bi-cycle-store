@@ -5,11 +5,7 @@ import { BiCycle } from './biCycle.model';
 import { TBiCycle } from './biCycleInterface';
 
 // Bi Cycle Data Save to Database
-const biCycleDataSaveToDatabase = async (bicycle: TBiCycle, file: any) => {
-  if (file) {
-    bicycle.image = file.path;
-  }
-
+const biCycleDataSaveToDatabase = async (bicycle: TBiCycle) => {
   const result = await BiCycle.create(bicycle);
   return result;
 };
@@ -48,12 +44,7 @@ const getSinglebiCycleDataFromDatabase = async (id: string) => {
 const singlebiCycleDataUpdateFromDatabase = async (
   id: string,
   cycle: TBiCycle,
-  file: any,
 ) => {
-  if (file) {
-    cycle.image = file.path;
-  }
-
   const result = await BiCycle.findByIdAndUpdate(
     id,
     { ...cycle },

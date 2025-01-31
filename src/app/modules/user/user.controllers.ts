@@ -4,7 +4,7 @@ import { UserServices } from './user.service';
 
 // Create Bi Cycle Controllers
 const createUser = catchAsync(async (req, res) => {
-  const result = await UserServices.userSaveToDatabase(req.body, req?.file);
+  const result = await UserServices.userSaveToDatabase(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,

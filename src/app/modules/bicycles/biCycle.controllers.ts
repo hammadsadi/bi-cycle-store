@@ -4,10 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 
 // Create Bi Cycle Controllers
 const createBiCycle = catchAsync(async (req, res) => {
-  const result = await biCycleServices.biCycleDataSaveToDatabase(
-    req.body,
-    req?.file,
-  );
+  const result = await biCycleServices.biCycleDataSaveToDatabase(req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
@@ -45,7 +42,6 @@ const updateSingleBiCycle = catchAsync(async (req, res) => {
   const result = await biCycleServices.singlebiCycleDataUpdateFromDatabase(
     req.params.productId,
     req.body,
-    req.file,
   );
   sendResponse(res, {
     statusCode: 200,

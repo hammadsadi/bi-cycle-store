@@ -35,8 +35,8 @@ const biCycleSchema = new Schema<TBiCycle>(
       required: true,
     },
     stock: {
-      type: Boolean,
-      default: true,
+      type: Number,
+      required: true,
     },
   },
   {

@@ -1,8 +1,7 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express from 'express';
 import { biCycleControllers } from './biCycle.controllers';
 import requestValidation from '../../middlewares/requestValidation';
 import { BicycleValidationSchemas } from './bicycle.validation.schemas';
-import { multerUpload } from '../../config/multer.config';
 import auth from '../../middlewares/authChecking';
 
 // Init Router
@@ -10,11 +9,7 @@ const router = express.Router();
 // Create BiCycle
 router.post(
   '/',
-  multerUpload.single('image'),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-    next();
-  },
+
   requestValidation(BicycleValidationSchemas.createBicycleValidationSchema),
   biCycleControllers.createBiCycle,
 );
@@ -26,11 +21,6 @@ router.get('/:productId', biCycleControllers.singleBiCycle);
 // router.put('/:productId', biCycleControllers.updateSingleBiCycle);
 router.put(
   '/:productId',
-  multerUpload.single('image'),
-  (req: Request, res: Response, next: NextFunction) => {
-    req.body = JSON.parse(req.body.data);
-    next();
-  },
   requestValidation(BicycleValidationSchemas.updateBicycleValidationSchema),
   biCycleControllers.updateSingleBiCycle,
 );

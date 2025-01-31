@@ -3,10 +3,7 @@ import { TUser } from './user.interface';
 import { User } from './user.model';
 
 // User Save To Database
-const userSaveToDatabase = async (userInfo: TUser, file: any) => {
-  if (file) {
-    userInfo.image = file.path;
-  }
+const userSaveToDatabase = async (userInfo: TUser) => {
   const user = await User.create(userInfo);
 
   return user;
