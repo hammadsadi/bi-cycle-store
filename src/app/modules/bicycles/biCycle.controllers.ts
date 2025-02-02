@@ -24,6 +24,19 @@ const allBiCycle = catchAsync(async (req, res) => {
   });
 });
 
+// Get Specific Field Controller
+const getSpecificField = catchAsync(async (req, res) => {
+  const result = await biCycleServices.getSpecificFieldCycleDataFromDatabase(
+    
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Bicycle Specific Field retrieved successfully',
+    data: result,
+  });
+});
+
 // Get Single Bi Cycle
 const singleBiCycle = catchAsync(async (req, res) => {
   const result = await biCycleServices.getSinglebiCycleDataFromDatabase(
@@ -72,4 +85,5 @@ export const biCycleControllers = {
   singleBiCycle,
   updateSingleBiCycle,
   deleteSingleBiCycle,
+  getSpecificField,
 };

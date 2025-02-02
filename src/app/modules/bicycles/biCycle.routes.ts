@@ -2,7 +2,7 @@ import express from 'express';
 import { biCycleControllers } from './biCycle.controllers';
 import requestValidation from '../../middlewares/requestValidation';
 import { BicycleValidationSchemas } from './bicycle.validation.schemas';
-import auth from '../../middlewares/authChecking';
+// import auth from '../../middlewares/authChecking';
 
 // Init Router
 const router = express.Router();
@@ -14,7 +14,8 @@ router.post(
   biCycleControllers.createBiCycle,
 );
 //Get All BiCycle
-router.get('/', auth('customer'), biCycleControllers.allBiCycle);
+router.get('/', biCycleControllers.allBiCycle);
+router.get('/specific', biCycleControllers.getSpecificField);
 // Get Single BiCycle
 router.get('/:productId', biCycleControllers.singleBiCycle);
 // Update Single BiCycle

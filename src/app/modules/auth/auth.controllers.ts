@@ -34,8 +34,7 @@ const logoutUser = catchAsync(async (req, res) => {
 
 // Get Login User Info
 const getMe = catchAsync(async (req, res) => {
-const result = await AuthServices.getLogedinUserFromDB(req?.user?.userEmail)
-  res.clearCookie('accessToken');
+const result = await AuthServices.getLogedinUserFromDB(req?.user?.userEmail);
   sendResponse(res, {
     statusCode: 200,
     success: true,

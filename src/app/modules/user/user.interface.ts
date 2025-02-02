@@ -11,6 +11,7 @@ export type TUser = {
   phone?: string;
   address?: string;
   city?: string;
+  status: 'active' | 'deactivate';
 };
 
 export interface UserModel extends Model<TUser> {

@@ -31,40 +31,25 @@ const getAllbiCycleDataFromDatabase = async (
   if (query?.maxPrice) {
     maxPrice = Number(query?.maxPrice);
   }
-  let searchQuery = BiCycle.find();
-  if (searchTerm) {
-    searchQuery = searchQuery.find({
-      $or: bicycleSearchableField.map((field) => ({
-        [field]: { $regex: searchTerm, $options: 'i' },
-      })),
-    });
-  }
+  const searchQuery = BiCycle.find({
+    $or: bicycleSearchableField.map((field) => ({
+      [field]: { $regex: searchTerm, $options: 'i' },
+    })),
+  });
 
-  if (minPrice !== undefined || maxPrice !== undefined) {
-    const priceFilter: Record<string, number> = {};
-    if (minPrice !== undefined) {
-      priceFilter.$gte = minPrice;
-    }
-    if (maxPrice !== undefined) {
-      priceFilter.$lte = maxPrice;
-    }
-    searchQuery = searchQuery.find({ price: priceFilter });
+  // Filter Price Range Wise
+  if (minPrice !== undefined && maxPrice !== undefined) {
+    searchQuery.where('price').gte(minPrice).lte(maxPrice);
+  } else if (minPrice !== undefined) {
+    searchQuery.where('price').gte(minPrice);
+  } else if (maxPrice !== undefined) {
+    searchQuery.where('price').lte(maxPrice);
   }
-
-  // Availability Filtering
-  if (query.availability) {
-    if (query.availability === 'in-stock') {
-      searchQuery = searchQuery.find({ stock: { $gt: 0 } });
-    } else if (query.availability === 'out-of-stock') {
-      searchQuery = searchQuery.find({ stock: { $lte: 0 } });
-    }
-  }
-
   // Exclude Filed For Filter
-  const excludeField = ['searchTerm', 'maxPrice', 'minPrice', 'availability'];
+  const excludeField = ['searchTerm', 'maxPrice', 'minPrice'];
   excludeField.forEach((el) => delete queryObject[el]);
-  searchQuery = searchQuery.find(queryObject);
-  const result = await searchQuery.exec();
+  const result = await searchQuery.find(queryObject);
+
   return result;
 };
 // Get Specific Field Data get From Database

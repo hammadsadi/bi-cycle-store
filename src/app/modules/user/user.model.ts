@@ -38,6 +38,10 @@ const userSchema = new Schema<TUser, UserModel>(
     city: {
       type: String,
     },
+    status: {
+      type: String,
+      default: 'active',
+    },
   },
   {
     timestamps: true,
