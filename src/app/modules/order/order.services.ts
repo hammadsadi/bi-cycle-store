@@ -101,6 +101,38 @@ const getOrder = async (email: string) => {
   return orders;
 };
 
+// Get Orders
+const getOrderForAdmin = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(400, 'User Not Found');
+  }
+  const orders = await Order.find().populate('user');
+
+  return orders;
+};
+
+
+
+// Bi Cycle Delivery Status Update from Database
+const updateOrderDeliveryStatusFromoDatabase = async (
+  statusInfo: string,
+  orderId: string,
+) => {
+  // Check Order
+  const isExistOrder = await Order.findById(orderId);
+  if (!isExistOrder) {
+    throw new AppError(404, 'Order not Found');
+  }
+  // Update Status
+  const result = await Order.findByIdAndUpdate(
+    orderId,
+    { deliveryStatus: statusInfo },
+    { new: true },
+  );
+
+  return result;
+};
 // Bi Cycle Data Save to Database
 const updateOrderFromoDatabase = async (
   orderInfo: Partial<IOrder>,
@@ -183,4 +215,6 @@ export const OrderServices = {
   getOrder,
   deleteOrderFromDatabase,
   updateOrderFromoDatabase,
+  getOrderForAdmin,
+  updateOrderDeliveryStatusFromoDatabase,
 };

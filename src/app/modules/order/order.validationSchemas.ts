@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { OrderDeliveryStatus } from './order.constant';
 
 // Create Order Validation Schema
 const createOrderValidationSchema = z.object({
@@ -33,7 +34,13 @@ const updateOrderValidationSchema = z.object({
   }),
 });
 
+const updateOrderDeliveryStatusValidationSchema = z.object({
+  body: z.object({
+    deliveryStatus: z.string(),
+  }),
+});
 export const OrderValidationSchemas = {
   createOrderValidationSchema,
   updateOrderValidationSchema,
+  updateOrderDeliveryStatusValidationSchema,
 };

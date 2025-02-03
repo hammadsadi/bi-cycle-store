@@ -2,9 +2,11 @@
 
 import config from '../../config';
 import AppError from '../../errors/AppError';
+import { TUser } from '../user/user.interface';
 import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 // Login User
 const userLogin = async (userInfo: TLoginUser) => {
@@ -31,14 +33,39 @@ const userLogin = async (userInfo: TLoginUser) => {
 
 // Login User
 const getLogedinUserFromDB = async (email: string) => {
-  const user = await User.findOne({email})
+  const user = await User.findOne({ email });
   if (!user) {
     throw new AppError(400, 'User Not Found');
   }
-  return user
+  return user;
+};
+
+// Update User Info
+const updateUserInfoFromDB = async (
+  userInfo: Partial<TUser>,
+  userEmail: string,
+) => {
+  console.log(userEmail);
+  const userExist = await User.findOne({ email: userEmail });
+  if (!userExist) {
+    throw new AppError(404, 'User Not Found');
+  }
+
+  if (userInfo?.password) {
+    userInfo.password = await bcrypt.hash(
+      userInfo.password,
+      Number(config.bcrypt_salt_rounds),
+    );
+  }
+  const user = await User.findOneAndUpdate({ email: userEmail }, userInfo, {
+    new: true,
+  });
+
+  return user;
 };
 
 export const AuthServices = {
   userLogin,
   getLogedinUserFromDB,
+  updateUserInfoFromDB,
 };

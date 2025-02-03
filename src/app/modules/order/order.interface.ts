@@ -6,6 +6,7 @@ export interface IOrder {
     product: Types.ObjectId;
     quantity: number;
   }[];
+  deliveryStatus: 'Delivered' | 'Pending' | 'Cancel';
   totalPrice: number;
   status: 'Pending' | 'Paid' | 'Shipped' | 'Completed' | 'Cancelled';
   transaction: {

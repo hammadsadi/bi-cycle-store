@@ -15,11 +15,24 @@ orderRouter.post(
   auth('customer'),
   OrderControllers.createOrder,
 );
-
+// Update Order Delivery Status
+orderRouter.patch(
+  '/delivery/status/:orderId',
+  auth('admin'),
+  // requestValidation(OrderValidationSchemas.updateOrderDeliveryStatusValidationSchema),
+  OrderControllers.updateOrderDeliveryStatus,
+);
 //Verify Payment
 orderRouter.get('/verify', auth('customer'), OrderControllers.orderverfy);
-// Get All Orders
+// Get All Logged in User Orders
 orderRouter.get('/all', auth('customer'), OrderControllers.getOrders);
+// Get All Orders
+orderRouter.get(
+  '/all-orders',
+  auth('admin'),
+  OrderControllers.getOrdersForAdmin,
+);
+
 // Delete Single Orders
 orderRouter.delete(
   '/delete/:orderId',

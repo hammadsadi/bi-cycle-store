@@ -22,15 +22,6 @@ const updateUserValidationSchema = z.object({
   body: z.object({
     name: z
       .string({ required_error: 'Please Provide a Bi-Cycle Name' })
-      .email()
-      .optional(),
-    email: z
-      .string({ required_error: 'Please Provide a Valid Email!' })
-      .optional(),
-    password: z
-      .string({
-        invalid_type_error: 'Please Provide Password',
-      })
       .optional(),
     phone: z
       .string({ required_error: 'Phone Number Must Be String' })

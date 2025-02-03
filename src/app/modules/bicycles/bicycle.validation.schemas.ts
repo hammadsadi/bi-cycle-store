@@ -33,7 +33,6 @@ const updateBicycleValidationSchema = z.object({
       .optional(),
     stock: z.number({ required_error: 'Please Provide Stock' }).optional(),
     image: z.string().optional(),
-    // stock: z.boolean({ required_error: 'Please Provide Stock Number' }),
   }),
 });
 

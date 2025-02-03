@@ -39,6 +39,16 @@ const getOrders = catchAsync(async (req, res) => {
   });
 });
 
+//Get All Order Controllers
+const getOrdersForAdmin = catchAsync(async (req, res) => {
+  const result = await OrderServices.getOrderForAdmin(req.user.userEmail);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Order Retrieved Successful',
+    data: result,
+  });
+});
 //Update Order Controllers
 const updateOrder = catchAsync(async (req, res) => {
   const result = await OrderServices.updateOrderFromoDatabase(
@@ -51,6 +61,20 @@ const updateOrder = catchAsync(async (req, res) => {
     statusCode: 200,
     success: true,
     message: 'Order Updated Successful',
+    data: result,
+  });
+});
+
+//Update Order Deliveru Status
+const updateOrderDeliveryStatus = catchAsync(async (req, res) => {
+  const result = await OrderServices.updateOrderDeliveryStatusFromoDatabase(
+    req.body?.deliveryStatus,
+    req.params.orderId,
+  );
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Order Delivery Status Updated Successful',
     data: result,
   });
 });
@@ -73,4 +97,6 @@ export const OrderControllers = {
   getOrders,
   deleteOrder,
   updateOrder,
+  getOrdersForAdmin,
+  updateOrderDeliveryStatus,
 };

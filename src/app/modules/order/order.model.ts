@@ -20,10 +20,16 @@ const orderSchema = new Schema<IOrder>({
       },
     },
   ],
+  deliveryStatus: {
+    type: String,
+    enum: ['Delivered', 'Pending', 'Cancel'],
+    default: 'Pending',
+  },
   totalPrice: {
     type: Number,
     required: true,
   },
+
   transaction: {
     id: String,
     transaction_status: String,

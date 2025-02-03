@@ -43,8 +43,20 @@ const result = await AuthServices.getLogedinUserFromDB(req?.user?.userEmail);
   });
 });
 
+
+// Update User Info
+const updateUserInfo = catchAsync(async (req, res) => {
+const result = await AuthServices.updateUserInfoFromDB(req?.body, req.user?.userEmail);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User Info Updated Successful',
+    data: result,
+  });
+});
 export const AuthControllers = {
   loginUser,
   logoutUser,
   getMe,
+  updateUserInfo,
 };
