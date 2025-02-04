@@ -21,16 +21,34 @@ const orderSaveToDatabase = async (
   // Calculate Price
   const products = orderInfo.products;
   let totalPrice = 0;
+  // const orderDetails = await Promise.all(
+  //   products?.map(async (item) => {
+  //     const bicycle = await BiCycle.findById(item.product);
+  //     if (bicycle) {
+  //       const subTotal = bicycle ? (bicycle.price || 0) * item.quantity : 0;
+  //       totalPrice += subTotal;
+  //       return item;
+  //     }
+  //   }),
+  // );
+
   const orderDetails = await Promise.all(
     products?.map(async (item) => {
       const bicycle = await BiCycle.findById(item.product);
+      if ((bicycle?.stock as number) < item?.quantity) {
+        throw new AppError(400, 'Insufficient Stock!');
+      }
       if (bicycle) {
         const subTotal = bicycle ? (bicycle.price || 0) * item.quantity : 0;
         totalPrice += subTotal;
+        // Stock Decreament
+        bicycle.stock -= item.quantity;
+        await bicycle.save();
         return item;
       }
     }),
   );
+
   let order = await Order.create({
     user: user?._id,
     products: orderDetails,
