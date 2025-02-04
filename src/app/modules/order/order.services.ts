@@ -21,17 +21,6 @@ const orderSaveToDatabase = async (
   // Calculate Price
   const products = orderInfo.products;
   let totalPrice = 0;
-  // const orderDetails = await Promise.all(
-  //   products?.map(async (item) => {
-  //     const bicycle = await BiCycle.findById(item.product);
-  //     if (bicycle) {
-  //       const subTotal = bicycle ? (bicycle.price || 0) * item.quantity : 0;
-  //       totalPrice += subTotal;
-  //       return item;
-  //     }
-  //   }),
-  // );
-
   const orderDetails = await Promise.all(
     products?.map(async (item) => {
       const bicycle = await BiCycle.findById(item.product);
