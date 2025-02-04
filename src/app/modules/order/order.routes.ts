@@ -19,7 +19,6 @@ orderRouter.post(
 orderRouter.patch(
   '/delivery/status/:orderId',
   auth('admin'),
-  // requestValidation(OrderValidationSchemas.updateOrderDeliveryStatusValidationSchema),
   OrderControllers.updateOrderDeliveryStatus,
 );
 //Verify Payment
@@ -36,7 +35,7 @@ orderRouter.get(
 // Delete Single Orders
 orderRouter.delete(
   '/delete/:orderId',
-  auth('customer'),
+  auth('admin'),
   OrderControllers.deleteOrder,
 );
 

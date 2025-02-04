@@ -1,12 +1,13 @@
 # 🚲 Bicycle Store API
 
-A Node.js and Express.js-based API designed to manage a bicycle store. The API enables users to add products, place orders, and calculate total revenue
+A Node.js, Express.js and MongoDB based API designed to manage a bicycle store. The API enables Admin can Create Bicycle and Manage and users can Create Account place orders and Complete Payment using ShurjoPay.
+
 
 ## 🚀 Features
 
-1. **Add Bicycles:** Add product details such as type, price, and quantity to the database.
-2. **Order Bicycles:** Users can place orders with a valid email address.
-3. **Revenue Calculation:** Retrieve the total revenue generated from orders.
+1. **Order Bicycles:** Users can place orders with Product id and Quantity. Total Price and User Info Automatically Calculate and Added from Backend.
+2. **Payment System:** User Can pay Using ShurjoPay Payment Gateway.
+3. **Profile Manage:** User Can Create and Update Personal Profile Information.
 
 ## 🛠️ Installation and Setup
 
@@ -30,6 +31,16 @@ npm install
 ```bash
  PORT=5000
 MONGODB_URL=<your-mongodb-url>
+NODE_ENV=<deployment>
+BCRYPT_SALT_ROUNDS=<bcrypt_salt_number>
+JWT_ACCESS_TOKEN_SECRET=<jwt_access_token_secret>
+JWT_ACCESS_EXPIRES_IN=<jwt_access_experies_in>
+SP_ENDPOINT=<shurjo_pay_sp_end_point>
+SP_USERNAME=<shurjo_pay_sp_username>
+SP_PASSWORD=<shurjo_pay_sp_password>
+SP_PREFIX=<shurjo_pay_sp_prefix>
+SP_RETURN_URL=<shurjo_pay_sp_return_url>
+DB_FILE=<shurjo_pay_db_file>
 ```
 
 4. Start the server:
