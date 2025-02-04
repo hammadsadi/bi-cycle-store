@@ -39,7 +39,7 @@ orderRouter.delete(
   OrderControllers.deleteOrder,
 );
 
-// Delete Single Orders
+// Update Single Orders
 orderRouter.patch(
   '/update/:orderId',
   requestValidation(OrderValidationSchemas.updateOrderValidationSchema),

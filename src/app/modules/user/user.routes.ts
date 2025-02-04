@@ -13,7 +13,7 @@ userRouter.post(
   UserControllers.createUser,
 );
 
-// Create User
+// Get All User
 userRouter.get('/', auth('admin'), UserControllers.getAllUser);
 userRouter.patch('/update', auth('admin'), UserControllers.updateUser);
 

@@ -65,50 +65,51 @@ http://localhost:5000
 URL:
 
 ```bash
-/api/products/
+/api/v1/bicycle
 ```
 
-Description: Adds a new bicycle to the database.
+Description: Add a new bicycle to the database.
 
 2. Get All Bicycles
    Method: GET
    URL:
 
 ```bash
-/api/products?searchTerm=<keyword>
+/api/v1/bicycle
 ```
 
-Description: Retrieves a list of bicycles. Optional search by type using the searchTerm query parameter.
+Description: Retrieves All bicycles. Optional search by type using the searchTerm query parameter by brand, bicycle name, or category and Filters for price range, model, brand, category, and availability.
 
 3. Get a Single Bicycle
    Method: GET
    URL:
 
 ```bash
-/api/products/:id
+/api/v1/bicycle/:productId
 ```
 
 Description: Fetch details of a specific bicycle by ID.
 
 4. Update a Bicycle
-   Method: PUT
+   Method: PATCH
    URL:
 
 ```bash
- /api/products/:id
+/api/v1/bicycle/:productId
 ```
 
-Description: Updates the details of a specific bicycle by ID.
+Description: Admin Can Updates the details of a specific bicycle by ID.
 
 5. Delete a Bicycle
    Method: DELETE
    URL:
 
 ```bash
-/api/products/:id
+/api/v1/bicycle/:productId
 ```
 
 Description: Deletes a bicycle by ID.
+
 
 ## Order Endpoints
 
@@ -117,17 +118,129 @@ Description: Deletes a bicycle by ID.
    URL:
 
 ```bash
-/api/orders/
+/api/v1/order/create
 ```
 
-Description: Place an order for a bicycle.
+Description: User can Place an order for a bicycle.
 
-2. Get Total Revenue
+
+2. Update Oder Delivery Status
+   Method: PATCH
+   URL:
+
+```bash
+/api/v1/order/delivery/status/:orderId
+```
+
+Description: Admin Can Update a Order Delivery Status.
+
+
+3. Payment Verify
    Method: GET
    URL:
 
 ```bash
-/api/orders/revenue
+/api/v1/order/verify
 ```
 
-Description: Calculates and returns the total revenue from all orders.
+Description: User Can Verify Payment.
+
+4. Get Loggedin user Order
+   Method: GET
+   URL:
+
+```bash
+/api/v1/order/all
+```
+
+Description: User Can See All Orders.
+
+5. All Orders
+   Method: GET
+   URL:
+
+```bash
+/api/v1/order/all-orders
+```
+
+Description: Get All Orders For Admin.
+
+
+6. Delete Orders
+   Method: DELETE
+   URL:
+
+```bash
+/api/v1/order/delete/:orderId
+```
+
+Description: Admin Can Delete Any Orders.
+
+
+## User Endpoints
+
+1. Create User
+   Method: POST
+   URL:
+
+```bash
+/api/v1/user
+```
+
+Description: User can Create Account.
+
+2. Get All User
+   Method: GET
+   URL:
+
+```bash
+/api/v1/user
+```
+
+Description:Get All User From  DB.
+
+
+3. User Status Update
+   Method: PATCH
+   URL:
+
+```bash
+/api/v1/user/update
+```
+
+Description: Admin Can Update User Status.
+
+
+
+## Auth Endpoints
+
+1. Login User
+   Method: POST
+   URL:
+
+```bash
+/api/v1/auth/login
+```
+
+Description: User can Login.
+
+
+2. Update User Profile Info
+   Method: PATCH
+   URL:
+
+```bash
+/api/v1/auth/update
+```
+
+Description: User can Update Profile Info.
+
+3. Get Logged in User Info
+   Method: GET
+   URL:
+
+```bash
+/api/v1/auth/me
+```
+
+Description: User can Get Profile Info.
